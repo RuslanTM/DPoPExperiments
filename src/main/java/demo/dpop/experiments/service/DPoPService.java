@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.dpop.experiments.model.DPoPPayloadDto;
 import demo.dpop.experiments.model.DPoPProofRequestDto;
 import demo.dpop.experiments.model.DPoPProofResponseDto;
+import demo.dpop.experiments.jws.DPoPJWSBuilder;
 import org.keycloak.common.crypto.CryptoIntegration;
 import org.keycloak.common.util.KeyUtils;
 import org.keycloak.common.util.Time;
@@ -12,7 +13,6 @@ import org.keycloak.crypto.*;
 import org.keycloak.crypto.def.DefaultCryptoProvider;
 import org.keycloak.jose.jwk.JWK;
 import org.keycloak.jose.jwk.JWKBuilder;
-import org.keycloak.jose.jws.JWSBuilder;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.security.KeyPair;
@@ -76,7 +76,7 @@ public class DPoPService {
         keyWrapper.setUse(KeyUse.SIG);
 
         AsymmetricSignatureSignerContext signatureSignerContext = new AsymmetricSignatureSignerContext(keyWrapper);
-        return new JWSBuilder().type("dpop+jwt").jwk(jwk).content(dPoPProof).sign(signatureSignerContext);
+        return new DPoPJWSBuilder().jwk(jwk).type("dpop+jwt").content(dPoPProof).sign(signatureSignerContext);
     }
 
     private DPoPPayloadDto generatePayload(DPoPProofRequestDto request) {
