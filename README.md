@@ -1,4 +1,5 @@
-# dpop-generator project
+# DPoPExperiments
+
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
